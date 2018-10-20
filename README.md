@@ -1,4 +1,4 @@
-# SSHshare v0.1.0
+# SSHshare v0.1.1
 **maintained by:** hkdb \<<hkdb@3df.io>\><br />
 
 ## Description
@@ -11,7 +11,11 @@ A while back, I discovered this awesome piece of software called [ssh-vault](htt
 
 ## Change Log
 
-#### OCT 20th, 2018 - v0.1.0 Released
+#### OCT 21th, 2018 - v0.1.1 Released
+
+- Hotfix - Installation Script Fixed
+
+#### OCT 21th, 2018 - v0.1.0 Released
 
 - Birth of SSHshare
 

@@ -4,7 +4,7 @@
 ### PROJECT:
 ### SSHshare
 ### VERSION:
-### v0.1.0
+### v0.1.1
 ### SCRIPT:
 ### SSHshare.py
 ### DESCRIPTION:
@@ -53,7 +53,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(aLabel, True, True, 0)
 
         # App Version
-        vLabel = Gtk.Label("v0.1.0")
+        vLabel = Gtk.Label("v0.1.1")
         vLabel.set_justify(Gtk.Justification.CENTER)
         self.box.pack_start(vLabel, True, True, 0)
 
