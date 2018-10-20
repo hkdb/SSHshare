@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=0.1.0
+Name=SSHshare
+Comment=Encrypt/Decrypt w/ ssh-vault
+GenericName=Densify
+Exec=/opt/SSHshare/SSHshare.py
+Path=/opt/SSHshare/
+Terminal=false
+Type=Application
+Icon=/opt/SSHshare/SSHshare-icon.png
+StartupNotify=true
+Categories=Utility;Application;
+Name[en_HK]=SSHshare.desktop
