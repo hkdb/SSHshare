@@ -1,9 +1,9 @@
 [Desktop Entry]
-Version=0.1.0
+Version=0.1.1
 Name=SSHshare
 Comment=Encrypt/Decrypt w/ ssh-vault
-GenericName=Densify
-Exec=/opt/SSHshare/SSHshare.py
+GenericName=SSHshare
+Exec=python3 /opt/SSHshare/SSHshare.py
 Path=/opt/SSHshare/
 Terminal=false
 Type=Application

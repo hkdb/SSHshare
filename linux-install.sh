@@ -4,7 +4,7 @@
 ### PROJECT:
 ### SSHshare
 ### VERSION:
-### v0.1.0
+### v0.1.1
 ### SCRIPT:
 ### install.sh
 ### DESCRIPTION:

@@ -14,6 +14,8 @@ A while back, I discovered this awesome piece of software called [ssh-vault](htt
 #### OCT 21th, 2018 - v0.1.1 Released
 
 - Hotfix - Installation Script Fixed
+- Hotfix - Interpreter for future cross platform support
+- Hotfix - .desktop fix
 
 #### OCT 21th, 2018 - v0.1.0 Released
 
