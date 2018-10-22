@@ -4,7 +4,7 @@
 ### PROJECT:
 ### SSHshare
 ### VERSION:
-### v0.1.1
+### v0.1.2
 ### SCRIPT:
 ### SSHshare.py
 ### DESCRIPTION:
@@ -53,7 +53,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(aLabel, True, True, 0)
 
         # App Version
-        vLabel = Gtk.Label("v0.1.1")
+        vLabel = Gtk.Label("v0.1.2")
         vLabel.set_justify(Gtk.Justification.CENTER)
         self.box.pack_start(vLabel, True, True, 0)
 
@@ -86,7 +86,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(bar1, True, True, 0)
 
         # Specify SSH Key File
-        sLabel = Gtk.Label("SSH Key:", xalign=0)
+        sLabel = Gtk.Label("SSH Key File ~ public | private:", xalign=0)
         self.box.pack_start(sLabel, True, True, 0)
         self.sChooser = Gtk.FileChooserButton()
         self.box.pack_start(self.sChooser, True, True, 0)
@@ -101,7 +101,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(bar1, True, True, 0)
 
         # Specify Input File w/ Content to Encrypt/Decrypt
-        tLabel = Gtk.Label("Text File:", xalign=0)
+        tLabel = Gtk.Label("Content File ~ .txt | .ssh:", xalign=0)
         self.box.pack_start(tLabel, True, True, 0)
         self.cChooser = Gtk.FileChooserButton()
         self.box.pack_start(self.cChooser, True, True, 0)
