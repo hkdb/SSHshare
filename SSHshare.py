@@ -260,11 +260,25 @@ class MyWindow(Gtk.Window, threading.Thread):
 
                 return 1
 
-        # Build gs Command
+        # Build ssh-vault Command
+        platform = sys.platform
+        if platform == "linux":
+            prefix = '/usr/bin/'
+        elif platform == "darwin":
+            prefix = '/usr/local/Cellar/ssh-vault/0.12.4/bin/'
+        elif platform == "win32":
+            prefix = 'C:/Program\ Files/SSHshare/'
+        else:
+             # Show Error Dialog - Exception
+            verbiage = "The OS you are running on is not supported. Please try installing this on another computer."
+            self.info("ERROR!", verbiage)
+            # Set Progress Bar to Ready and Stop Pulsing
+            self.ready()
+
         if aType == "Encrypt":
-            self.cmmd = 'ssh-vault -k ' + sFile + ' create < ' + cFile + ' ' + oFile
+            self.cmmd = prefix + 'ssh-vault -k ' + sFile + ' create < ' + cFile + ' ' + oFile
         elif aType == "Decrypt":
-            self.cmmd = 'ssh-vault -k ' + sFile + ' -o ' + oFile + ' view ' + cFile
+            self.cmmd = prefix + 'ssh-vault -k ' + sFile + ' -o ' + oFile + ' view ' + cFile
         else:
             # Show Error Dialog - Exception
             verbiage = "Something went wrong when building command"
@@ -390,7 +404,7 @@ class MyWindow(Gtk.Window, threading.Thread):
     # Process Function to execute ssh-vault as SubProcess to be Called on a Separate Thread
     def process(self, out_queue):
         try:
-            process = subprocess.Popen(self.cmmd, shell=True, stdout=subprocess.PIPE)
+            process = subprocess.Popen(self.cmmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=os.getcwd(), env=os.environ)
             out, err = process.communicate()
             out_queue.put(True)
         except:

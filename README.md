@@ -11,6 +11,14 @@ A while back, I discovered this awesome piece of software called [ssh-vault](htt
 
 ## Change Log
 
+#### OCT 23th, 2018 - v0.1.2 Released
+
+- UI Fixes and Visual Cues
+- macOS .app
+- Windows 10 .exe
+- Linux Install Script installs ssh-vault to /usr/bin instead
+- Determines OS platform and puts the right full-path to ssh-vault on command execution to prevent env issues with launching with applications menu
+
 #### OCT 21th, 2018 - v0.1.1 Released
 
 - Hotfix - Installation Script Fixed
