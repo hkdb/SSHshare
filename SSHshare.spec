@@ -30,15 +30,15 @@ exe = EXE(pyz,
 
 app = BUNDLE(exe,
              name='SSHshare.app',
-             icon='/Users/hkdb/AeroFS/Private/Development/SSHshare/icon.icns',
+             icon='/Users/hkdb/Development/SSHshare/icon.icns',
              bundle_identifier='com.3df.osx.sshshare',
              info_plist={
                'CFBundleName': 'SSHshare',
                'CFBundleDisplayName': 'SSHshare',
-               'CFBundleGetInfoString': 'Encrypt Text Files w/ SSH Vault',
+               'CFBundleGetInfoString': 'Encrypt/Decrypt Data w/ ssh-vault',
                'CFBundleIdentifier': 'com.3df.osx.sshshare',
-               'CFBundleVersion': '0.1.0',
-               'CFBundleShortVersionString': '0.1.0',
+               'CFBundleVersion': '0.1.2',
+               'CFBundleShortVersionString': '0.1.2',
                'NSHumanReadableCopyright': '3DF OSI - MIT License'
               }
              )
