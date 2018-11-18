@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['SSHshare.py'],
+a = Analysis(['wSSHshare.py'],
              pathex=['./'],
              binaries=[
                  (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\Atk-1.0.typelib', 'gi_typelibs'),
