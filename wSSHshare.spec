@@ -5,7 +5,16 @@ block_cipher = None
 
 a = Analysis(['SSHshare.py'],
              pathex=['./'],
-             binaries=[],
+             binaries=[
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\Atk-1.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\Gtk-3.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\GObject-2.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\GiRepository-2.0.typelib', 'gi_typelibs'),                 
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\GModule-2.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\Gdk-3.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\GdkWin32-3.0.typelib', 'gi_typelibs'),
+                 (r'C:\Python27\Lib\site-packages\gnome\lib\girepository-1.0\GdkPixbuf-2.0.typelib', 'gi_typelibs')
+             ],
              datas=[('./header.png', '.')],
              hiddenimports=[],
              hookspath=[],
@@ -28,5 +37,5 @@ exe = EXE(pyz,
           debug=True,
           strip=False,
           upx=True,
-          console=True,
           icon='icon.ico')
+          console=True,

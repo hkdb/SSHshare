@@ -3,8 +3,6 @@
 #################################################################
 ### PROJECT:
 ### SSHshare
-### VERSION:
-### v0.1.2
 ### SCRIPT:
 ### install.sh
 ### DESCRIPTION:

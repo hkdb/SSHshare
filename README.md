@@ -1,5 +1,7 @@
-# SSHshare v0.1.2
+# SSHshare v0.1.3
 **maintained by:** hkdb \<<hkdb@3df.io>\><br />
+
+![SSHshare](SSHshare-icon.png)
 
 ## Description
 ---
@@ -7,10 +9,17 @@ A GTK+ GUI Application written in Python that simplifies encrypting and decrypti
 
 ## Concept
 ---
-A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly way to share passwords and sensitive information between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely. 
+A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive information between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely. 
 
 ## Change Log
 ---
+#### MAY 10th, 2019 - v0.1.3 Released
+
+- Platform detection fixed for Linux systems that returns "Linux2"
+- Fixed encryption command to avoid anomalies that causes failed output
+- Fixed decryption command and subprocess to avaid anomalies that causes failed output
+- Added short-cut button to use ~/.ssh/id_rsa without searching for it
+
 #### OCT 23th, 2018 - v0.1.2 Released
 
 - UI Fixes and Visual Cues
@@ -31,7 +40,7 @@ A while back, I discovered this awesome piece of software called [ssh-vault](htt
 
 ## Screenshots
 ---
-![Screenshot](https://osi.3df.io/wp-content/uploads/2018/10/SSHshare-ScreenShot.png)
+![Screenshot](Screenshot.png)
 
 ## Under the Hood
 ---

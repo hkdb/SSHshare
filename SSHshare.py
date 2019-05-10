@@ -4,7 +4,7 @@
 ### PROJECT:
 ### SSHshare
 ### VERSION:
-### v0.1.2
+### v0.1.3
 ### SCRIPT:
 ### SSHshare.py
 ### DESCRIPTION:
@@ -53,7 +53,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(aLabel, True, True, 0)
 
         # App Version
-        vLabel = Gtk.Label("v0.1.2")
+        vLabel = Gtk.Label("v0.1.3")
         vLabel.set_justify(Gtk.Justification.CENTER)
         self.box.pack_start(vLabel, True, True, 0)
 
@@ -90,6 +90,11 @@ class MyWindow(Gtk.Window, threading.Thread):
         self.box.pack_start(sLabel, True, True, 0)
         self.sChooser = Gtk.FileChooserButton()
         self.box.pack_start(self.sChooser, True, True, 0)
+
+        # Shortcut to Use Private Key in ~/.ssh/id_rsa
+        self.action = Gtk.Button(label="Use My Private Key (Mac/Linux Only)")
+        self.action.connect("clicked", self.on_action_clicked)
+        self.box.pack_start(self.action, True, True, 0)
 
         # Help Button - SSH Key Help
         self.help = Gtk.Button(label="?")
@@ -146,6 +151,11 @@ class MyWindow(Gtk.Window, threading.Thread):
         treeiter = combobox.get_active_iter()
         model = combobox.get_model()
 
+    # Action Button Handler
+    def on_action_clicked(self, widget):
+        home = os.path.expanduser("~")
+        self.sChooser.set_filename(home + "/.ssh/id_rsa")
+
     # Help Button Handler
     def on_help_clicked(self, widget):
         # Show Action Type Descriptions Help Dialog
@@ -182,12 +192,12 @@ class MyWindow(Gtk.Window, threading.Thread):
         # Set Action Type
         aTypeIter = self.aType.get_active_iter()
         aTypeModel = self.aType.get_model()
-        aType = aTypeModel[aTypeIter][0]
+        self.type = aTypeModel[aTypeIter][0]
 
         # Set Ouput File based on Action Type  
-        if aType == "Encrypt":
+        if self.type == "Encrypt":
             oFullName = oName + ".ssh"
-        elif aType == "Decrypt":
+        elif self.type == "Decrypt":
             oFullName = oName + ".txt"
         else:
             # Show Error Dialog - Exception
@@ -264,6 +274,8 @@ class MyWindow(Gtk.Window, threading.Thread):
         platform = sys.platform
         if platform == "linux":
             prefix = '/usr/bin/'
+        elif platform == "linux2":
+            prefix = '/usr/bin/'
         elif platform == "darwin":
             prefix = '/usr/local/Cellar/ssh-vault/0.12.4/bin/'
         elif platform == "win32":
@@ -275,10 +287,11 @@ class MyWindow(Gtk.Window, threading.Thread):
             # Set Progress Bar to Ready and Stop Pulsing
             self.ready()
 
-        if aType == "Encrypt":
-            self.cmmd = prefix + 'ssh-vault -k ' + sFile + ' create < ' + cFile + ' ' + oFile
-        elif aType == "Decrypt":
-            self.cmmd = prefix + 'ssh-vault -k ' + sFile + ' -o ' + oFile + ' view ' + cFile
+        if self.type == "Encrypt":
+            self.cmmd = prefix + 'ssh-vault -k ' + '\"' + sFile + '\"' + ' create < ' + '\"' + cFile + '\"' + ' ' + '\"' + oFile + '\"'
+        elif self.type == "Decrypt":
+            self.cmmd = prefix + 'ssh-vault -k \"' + sFile + '\" view \"' + cFile + '\" > \"' + oFile + '\"'
+            print(self.cmmd)
         else:
             # Show Error Dialog - Exception
             verbiage = "Something went wrong when building command"
@@ -404,7 +417,7 @@ class MyWindow(Gtk.Window, threading.Thread):
     # Process Function to execute ssh-vault as SubProcess to be Called on a Separate Thread
     def process(self, out_queue):
         try:
-            process = subprocess.Popen(self.cmmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=os.getcwd(), env=os.environ)
+            process = subprocess.Popen(self.cmmd, shell=True)
             out, err = process.communicate()
             out_queue.put(True)
         except:
