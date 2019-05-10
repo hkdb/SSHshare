@@ -1,6 +1,5 @@
 !.gitignore
 build/
-dist/
 __pycache__/
 .DS_Store
 .vscode
