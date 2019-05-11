@@ -279,7 +279,7 @@ class MyWindow(Gtk.Window, threading.Thread):
         elif platform == "darwin":
             prefix = '/usr/local/Cellar/ssh-vault/0.12.4/bin/'
         elif platform == "win32":
-            prefix = 'C:/Program\ Files/SSHshare/'
+            prefix = '\"C:/Program Files/SSHshare/\"'
         else:
              # Show Error Dialog - Exception
             verbiage = "The OS you are running on is not supported. Please try installing this on another computer."
