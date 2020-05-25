@@ -1,18 +1,27 @@
-# SSHshare v0.1.3
+# SSHshare v0.2.0
 **maintained by:** hkdb \<<hkdb@3df.io>\><br />
 
 ![SSHshare](SSHshare-icon.png)
 
 ## Description
 ---
-A GTK+ GUI Application written in Python that simplifies encrypting and decrypting text files with [ssh-vault](https://ssh-vault.com) to share with others
+A GUI Application written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting text files with [ssh-vault](https://ssh-vault.com) to share with others
 
 ## Concept
 ---
-A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive information between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely. 
+A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive information between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely.
+
+### From Python to Go
+
+This was originally written in Python and GTK3 which is great when running on Linux and Mac but not so much for Windows. I wanted something that was truly cross platform and easy to distribute so I ended up with HTML/JS (UI) and [Go](https://golang.org) (logic) with [zserge/webview](https://github.com/zserge/webview) (go/webview 2-way bindings), [sqweek/dialog](https://github.com/sqweek/dialog) (cross-platform native dialogs), and [skratchdot/open-golang](https://github.com/skratchdot/open-golang) (open resources with default applications across Win/Lin/Mac).
 
 ## Change Log
 ---
+
+#### May XXth, 2020 - v0.2.0 Released
+
+- Porte to Go/Webview
+
 #### MAY 10th, 2019 - v0.1.3 Released
 
 - Platform detection fixed for Linux systems that returns "Linux2"
@@ -76,35 +85,22 @@ Questionable Conditions that the application will verify with User via A Dialog 
 
 ## Dependencies
 ---
-
-- Python 3
-- GTK+ 3
-- pygobject
-- gi
+TBD
 
 ## Installation
 ---
 
-### [Linux](##Installation)
-
-1. Verify that there's a ~/.local/bin and if not, make the directory and make sure it's configured properly in your environment.
-2. Move SSHshare directory to /opt/
-3. Change into /opt/SSHshare/
-4. Run Install Script:
-
-```
-sudo chmod u+x linux-install.sh
-sudo ./linux-install.sh
-```
-### [macOS](Mac.md)
-### [Win10](Win.md)
+### [Linux](linux/README.md)
+### [macOS](macos/README.md)
+### [Win10](win/README.md)
 
 Enjoy!
 
 ## Future Plans
 ---
-- Mac and Windows Support
-- More User Friendly Features
+
+Coming soon!
+
 
 ## Disclaimer
 ---
@@ -120,4 +116,4 @@ To Learn more please visit:
 
 https://osi.3df.io
 
-https://www.3df.com.hk
+https://3df.io
