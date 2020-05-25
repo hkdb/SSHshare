@@ -5,7 +5,7 @@
 
 ## Description
 ---
-A GUI Application written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting text files with [ssh-vault](https://ssh-vault.com) to share with others
+A Graphical Desktop Application written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting text files with [ssh-vault](https://ssh-vault.com) to share with others
 
 ## Concept
 ---
