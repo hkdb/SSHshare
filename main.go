@@ -9,11 +9,14 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/skratchdot/open-golang/open"
 	"github.com/sqweek/dialog"
@@ -23,7 +26,7 @@ import (
 )
 
 const (
-	windowWidth  = 600
+	windowWidth  = 500
 	windowHeight = 700
 	title        = "SSHshare"
 	version      = "v0.2.0"
@@ -134,7 +137,7 @@ var indexHTML = `<!doctype html>
 
 	</style>
 	
-	<body bgcolor="#303030">
+	<body style="background-color: #303030;">
 		<br>
 		<br>
 		<center><img src="data:image/png;base64, ` + string(b64.StdEncoding.EncodeToString([]byte(logo))) + `"></center>
@@ -168,8 +171,6 @@ var indexHTML = `<!doctype html>
 				setDirection(dir);
 				document.getElementById('loader').style.visibility = "visible";
 				submit();
-				document.getElementById('loader').style.visibility = "hidden";
-				popup("done")
 			}
 			
 		</script>
@@ -216,7 +217,7 @@ func handleRPC(data string) {
 			fmt.Println("Can't read file...")
 		} else {
 			key = filename
-			w.Eval("document.getElementById(\"key\").innerText = document.getElementById(\"key\").innerText + \"" + getFileName("key") + "\";")
+			w.Eval("document.getElementById(\"key\").innerText = \"" + getFileName("key") + "\";")
 			w.Eval("document.getElementById(\"key\").style.border = \"3px dashed black\";")
 		}
 	}
@@ -232,7 +233,27 @@ func pop(msg string) {
 	if msg == "done" {
 		message := filepath.Base(file) + " has been " + direction + "ed successfully!"
 		action := direction + "ed!"
-		dialog.Message("%s", message).Title(action).Info()
+		// dialog.Message("%s", message).Title(action).Info()
+		ok := dialog.Message("%s", message+"\n\nWould you like to show the file in its folder?").Title(action).YesNo()
+		if ok == true {
+			var fname string
+
+			if direction == "encrypt" {
+				fname = file + ".ssh"
+			}
+
+			if direction == "decrypt" {
+				fname = removeExt(file)
+			}
+
+			err := open.StartWith(fname, "nautilus")
+			if err != nil {
+				fmt.Println(err)
+			}
+
+		}
+	} else {
+		dialog.Message("%s", msg).Title("Error!").Error()
 	}
 }
 
@@ -246,9 +267,102 @@ func getFileName(f string) string {
 	return basename
 }
 
-func submit(file string, key string, direction string) {
-	// cmd := file + " - " + key + " - " + direction
-	fmt.Println(direction)
+func removeExt(input string) string {
+	if len(input) > 0 {
+		if i := strings.LastIndex(input, "."); i > 0 {
+			input = input[:i]
+		}
+	}
+	return input
+}
+
+func stopLoading() {
+	w.Eval("document.getElementById(\"loader\").style.visibility = \"hidden\";")
+}
+
+func checkLogic() bool {
+	if file == "" {
+		pop("\nPlease select a file to " + direction + ".")
+		stopLoading()
+		return false
+	}
+
+	if key == "" {
+		if direction == "encrypt" {
+			pop("\nPlease select a public key to " + direction + ".")
+			stopLoading()
+			return false
+		} else {
+			pop("\nPlease select a private key to " + direction + ".")
+			stopLoading()
+			return false
+		}
+	}
+
+	if strings.Contains(file, "\\") {
+		pop("File name must not contain a \"\\\"... Please change the file name and try again.")
+		stopLoading()
+		return false
+	}
+
+	if strings.Contains(file, "`") {
+		pop("File name must not contain a \"`\"... Please change the file name and try again.")
+		stopLoading()
+		return false
+	}
+
+	if direction == "encrypt" && strings.Contains(file, ".ssh") {
+		pop("You are trying to encrypt a ssh-vault file. You probably want to decrypt instead?")
+		stopLoading()
+		return false
+	}
+
+	if direction == "decrypt" && strings.Contains(file, ".ssh") == false {
+		pop("You can only decrypt .ssh files...")
+		stopLoading()
+		return false
+	}
+
+	return true
+}
+
+func process() {
+
+	check := checkLogic()
+	if check == false {
+		// Logic check did not pass. Don't continue...
+		return
+	}
+
+	if direction == "encrypt" {
+		cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" create < \""+file+"\" \""+file+".ssh\"")
+		var out bytes.Buffer
+		var stderr bytes.Buffer
+		cmd.Stdout = &out
+		cmd.Stderr = &stderr
+		err := cmd.Run()
+		fmt.Println(cmd)
+		if err != nil {
+			pop(fmt.Sprint(err) + "\n\n" + stderr.String())
+		} else {
+			pop("done")
+		}
+	}
+	if direction == "decrypt" {
+		cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" -o \""+removeExt(file)+"\" view \""+file+"\"")
+		var out bytes.Buffer
+		var stderr bytes.Buffer
+		cmd.Stdout = &out
+		cmd.Stderr = &stderr
+		err := cmd.Run()
+		fmt.Println(cmd)
+		if err != nil {
+			pop(fmt.Sprint(err) + "\n\n" + stderr.String())
+		} else {
+			pop("done")
+		}
+	}
+	stopLoading()
 }
 
 func main() {
@@ -274,7 +388,7 @@ func main() {
 		direction = d
 	})
 	w.Bind("submit", func() {
-		fmt.Println(file + " | " + key + " | " + direction)
+		process()
 	})
 	w.Bind("quit", func() {
 		w.Terminate()

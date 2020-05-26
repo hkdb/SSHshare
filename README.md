@@ -20,7 +20,7 @@ This was originally written in Python and GTK3 which is great when running on Li
 
 #### May XXth, 2020 - v0.2.0 Released
 
-- Porte to Go/Webview
+- Ported to Go/Webview
 
 #### MAY 10th, 2019 - v0.1.3 Released
 
@@ -58,7 +58,7 @@ It essentially takes your GUI input and turn them into the following ssh-vault c
 Encrypt ~
 
 ```
-ssh-vault -k [/full_path/ssh_public_key_file] create < [/full_path/input].txt + ' [input].ssh
+ssh-vault -k [/full_path/ssh_public_key_file] create < [/full_path/input] [input].ssh
 ```
 Decrypt ~
 
@@ -74,10 +74,12 @@ Currently, if any of the below conditions are met, the application will either a
 Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking "OK":
 
 - Input file is not specified
-- Input file does not end with .txt or .ssh
-- Input File and Output File are the same
-- Input File Name Contains Unsupported Characters(/\\:;\`)
-- Output File Name Contains Unsupported Characters(/\\:;\`)
+- SSH Key is not specified
+- Input File Name Contains Unsupported Characters(\`)
+- Encrypt is selected but the input file has a .ssh extension
+- Decrypt is selected but the input file does not have a .ssh extension
+- `(pending)` Encrypt is selected but private key is specified
+- `(pending)` Decrypt is selected but public key is specified
 
 Questionable Conditions that the application will verify with User via A Dialog Message:
 
