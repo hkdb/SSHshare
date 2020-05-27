@@ -15,8 +15,10 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/skratchdot/open-golang/open"
@@ -28,7 +30,7 @@ import (
 
 const (
 	windowWidth  = 500
-	windowHeight = 700
+	windowHeight = 800
 	title        = "SSHshare"
 	version      = "v0.2.0"
 )
@@ -50,21 +52,30 @@ var indexHTML = `<!doctype html>
 	<head>
 		<title>SSHshare</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
 	</head>
 
 	<style>
 		body {
 			background-color: 303030;
+			font-family: 'Titillium Web', sans-serif;
 		}
 			
 		h1 {
 			color: white;
+			font-family: 'Titillium Web', sans-serif;
 			text-align: center;
 		}
 		
+		a:link {
+			color: b51a22;
+			background-color: transparent;
+			text-decoration: none;
+		}
+
 		.general {
 			color: white;
-			font-family: Roboto;
+			font-family: 'Titillium Web', sans-serif;
 			font-size: 14px;
 			text-align: center;
 			padding-bottom: 20px;
@@ -74,7 +85,7 @@ var indexHTML = `<!doctype html>
 			border: 0px;
 			cursor: pointer;
 			display: inline-block;
-			font-family: "Font Awesome 5 Pro";
+			font-family: 'Titillium Web', sans-serif;
 			font-size: inherit;
 			font-weight: 100%;
 			margin-bottom: 1rem;
@@ -98,7 +109,7 @@ var indexHTML = `<!doctype html>
 			border: 0px;
 			cursor: pointer;
 			display: inline-block;
-			font-family: "Font Awesome 5 Pro";
+			font-family: 'Titillium Web', sans-serif;
 			font-size: inherit;
 			font-weight: 100%;
 			margin-bottom: 1rem;
@@ -143,8 +154,8 @@ var indexHTML = `<!doctype html>
 		<br>
 		<center><img src="data:image/png;base64, ` + string(b64.StdEncoding.EncodeToString([]byte(logo))) + `"></center>
 		<br>
-		<center><font face="Roboto" color="#cccccc" size=2>An <a href="javascript:handle('openosi')">OSI</a> application sponsored by <a href="javascript:handle('open3df')">3DF</a></font></center>
-		<center><font face="Roboto" color="#cccccc" size=2>` + version + `</font></center>
+		<center><font face="Titillium Web, sans-serif;" color="#cccccc" size=2>An <a href="javascript:handle('openosi')">OSI</a> application sponsored by <a href="javascript:handle('open3df')">3DF</a></font></center>
+		<center><font face="Titillium Web, sans-serif;" color="#cccccc" size=2>` + version + `</font></center>
 		<br>
 		<div class="general" ondrop="disableDragAndDrop(event)" ondragover="disableDragAndDrop(event)" ondragleave="disableDragLeave(event)">
 			<select id="direction" onselect="setDirection('this.value')">
@@ -257,15 +268,36 @@ func pop(msg string) {
 				fname = removeExt(file)
 			}
 
-			err := open.StartWith(fname, "nautilus")
-			if err != nil {
-				fmt.Println(err)
+			if runtime.GOOS == "linux" {
+				err := open.StartWith(fname, "nautilus")
+				if err != nil {
+					pop("\nCouldn't open folder: " + fmt.Sprint(err))
+				}
 			}
 
+			if runtime.GOOS == "darwin" {
+				cmd := exec.Command("open", "-R", fname)
+				err := cmd.Run()
+				if err != nil {
+					pop("\nCouldn't open folder: " + fmt.Sprint(err))
+				}
+			}
+
+			if runtime.GOOS == "windows" {
+
+			}
 		}
 	} else {
 		dialog.Message("%s", msg).Title("Error!").Error()
 	}
+}
+
+func getCurrentPath() string {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return dir
 }
 
 func getFileName(f string) string {
@@ -375,31 +407,71 @@ func process() {
 	}
 
 	if direction == "encrypt" {
-		cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" create < \""+file+"\" \""+file+".ssh\"")
-		var out bytes.Buffer
-		var stderr bytes.Buffer
-		cmd.Stdout = &out
-		cmd.Stderr = &stderr
-		err := cmd.Run()
-		fmt.Println(cmd)
-		if err != nil {
-			pop(fmt.Sprint(err) + "\n\n" + stderr.String())
-		} else {
-			pop("done")
+		if runtime.GOOS == "linux" {
+			cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" create < \""+file+"\" \""+file+".ssh\"")
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			err := cmd.Run()
+			fmt.Println(cmd)
+			if err != nil {
+				pop(fmt.Sprint(err) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
+		}
+		if runtime.GOOS == "darwin" {
+			dir := getCurrentPath()
+			cmd := exec.Command("sh", "-c", dir+"/ssh-vault -k \""+key+"\" create < \""+file+"\" \""+file+".ssh\"")
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			cerr := cmd.Run()
+			fmt.Println(cmd)
+			if cerr != nil {
+				pop(fmt.Sprint(cerr) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
+		}
+		if runtime.GOOS == "windows" {
+
 		}
 	}
 	if direction == "decrypt" {
-		cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" -o \""+removeExt(file)+"\" view \""+file+"\"")
-		var out bytes.Buffer
-		var stderr bytes.Buffer
-		cmd.Stdout = &out
-		cmd.Stderr = &stderr
-		err := cmd.Run()
-		fmt.Println(cmd)
-		if err != nil {
-			pop(fmt.Sprint(err) + "\n\n" + stderr.String())
-		} else {
-			pop("done")
+		if runtime.GOOS == "linux" {
+			cmd := exec.Command("bash", "-c", "ssh-vault -k \""+key+"\" -o \""+removeExt(file)+"\" view \""+file+"\"")
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			err := cmd.Run()
+			fmt.Println(cmd)
+			if err != nil {
+				pop(fmt.Sprint(err) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
+		}
+		if runtime.GOOS == "darwin" {
+			dir := getCurrentPath()
+			cmd := exec.Command("sh", "-c", dir+"/ssh-vault -k \""+key+"\" -o \""+removeExt(file)+"\" view \""+file+"\"")
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			err := cmd.Run()
+			fmt.Println(cmd)
+			if err != nil {
+				pop(fmt.Sprint(err) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
+		}
+		if runtime.GOOS == "windows" {
+
 		}
 	}
 	stopLoading()
