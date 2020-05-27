@@ -5,22 +5,27 @@
 
 ## Description
 ---
-A Graphical Desktop Application written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting text files with [ssh-vault](https://ssh-vault.com) to share with others
+A Graphical Desktop Application (wrapper) written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting files with [ssh-vault](https://ssh-vault.com).
 
 ## Concept
 ---
-A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive information between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely.
+A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive documents between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely.
+
+### WHy SSH Keys?
+
+Because most technical staff and more and more so even non-technical ones have a ssh key pair already for accessing cloud resources and such. Leveraging what's already there to encrypt and decrypt information shared among team members is a much better solution than to ask everyone to adopt yet another tech (ie. GPG, etc) to accomplish what can already be done with what's arleady in the existing encryption toolbox.
 
 ### From Python to Go
 
-This was originally written in Python and GTK3 which is great when running on Linux and Mac but not so much for Windows. I wanted something that was truly cross platform and easy to distribute so I ended up with HTML/JS (UI) and [Go](https://golang.org) (logic) with [zserge/webview](https://github.com/zserge/webview) (go/webview 2-way bindings), [sqweek/dialog](https://github.com/sqweek/dialog) (cross-platform native dialogs), and [skratchdot/open-golang](https://github.com/skratchdot/open-golang) (open resources with default applications across Win/Lin/Mac).
+This was originally written in Python and GTK3 which is great when running on Linux and Mac but not so much for Windows. I wanted something that was truly cross platform and easy to distribute so I ended up with HTML/JS (UI) and [Go](https://golang.org) (logic) with [zserge/webview](https://github.com/zserge/webview) (go/webview infrastructure and 2-way bindings), [sqweek/dialog](https://github.com/sqweek/dialog) (cross-platform native dialogs), and [skratchdot/open-golang](https://github.com/skratchdot/open-golang) (open resources with default applications across Win/Lin/Mac).
 
 ## Change Log
 ---
 
 #### May XXth, 2020 - v0.2.0 Released
 
-- Ported to Go/Webview
+- Rewritten Go/JS/HTML
+- Removed restrictions of only processsing text files as ssh-vault supports pretty much all formats
 
 #### MAY 10th, 2019 - v0.1.3 Released
 
@@ -66,6 +71,26 @@ Decrypt ~
 ssh-vault -k [/full_path/ssh_private_key_file] -o [/full_path/input].txt view [input].ssh
 ```
 
+## Expected Behavior
+
+Persona A:  
+- `private` - a_id_rsa
+- `public` - a_id_rsa.pub
+
+Persona B:
+- `private` - b_id_rsa
+- `public` - b_id_rsa.pub
+
+Scenario: `A` sends an encrypted file named `presentation.pdf` to `B`
+1. B sends his/her public key (`b_id_rsa.pub`) to A by e-mail or a messenger of choice
+2. A selects (`presentation.pdf`) and `b_id_rsa.pub` on SSHshare to encrypt the file
+3. A will find a new file named `presentation.pdf.ssh` located in the same directory as `presentation.pdf`
+4. A sends presentation.pdf.ssh to B via e-mail or some sort of messenger of choice
+5. B receives `presentation.pdf.ssh` from A and saves it ot his/her local harddrive
+6. B decrypts `presentation.pdf.ssh` by selecting it on SSHshare and his own private key (`b_id_rsa`)
+7. B will find a new file named `presenation.pdf` in the same directory of `presentation.pdf.ssh`
+8. B can now read the presentation sent from A securely
+
 ## Error Handling
 ---
 
@@ -78,12 +103,9 @@ Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking 
 - Input File Name Contains Unsupported Characters(\`)
 - Encrypt is selected but the input file has a .ssh extension
 - Decrypt is selected but the input file does not have a .ssh extension
-- `(pending)` Encrypt is selected but private key is specified
-- `(pending)` Decrypt is selected but public key is specified
-
-Questionable Conditions that the application will verify with User via A Dialog Message:
-
-- Output File Name Matches a File in the Output Directory
+- Encrypt is selected but private key is specified
+- Decrypt is selected but public key is specified
+- When user tries to drag and drop files (`Until Drag and Drop is implemented`)
 
 ## Dependencies
 ---

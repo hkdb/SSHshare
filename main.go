@@ -11,6 +11,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -145,7 +146,7 @@ var indexHTML = `<!doctype html>
 		<center><font face="Roboto" color="#cccccc" size=2>An <a href="javascript:handle('openosi')">OSI</a> application sponsored by <a href="javascript:handle('open3df')">3DF</a></font></center>
 		<center><font face="Roboto" color="#cccccc" size=2>` + version + `</font></center>
 		<br>
-		<div class="general">
+		<div class="general" ondrop="disableDragAndDrop(event)" ondragover="disableDragAndDrop(event)" ondragleave="disableDragLeave(event)">
 			<select id="direction" onselect="setDirection('this.value')">
 				<option value="encrypt" selected>Encrypt</option>
 				<option value="decrypt">Decrypt</option>
@@ -166,13 +167,23 @@ var indexHTML = `<!doctype html>
 			<div id="loader" class="loader"></div>
 		</div>
 		<script>
+			
+		  	function disableDragAndDrop(ev) {
+				ev.preventDefault()
+			}
+
+			function disableDragLeave(ev) {
+				ev.preventDefault();
+				popup("\n Sorry! Drag and Drop is currently not supported.");
+			}
+
 			function preSubmit() {
 				var dir = document.getElementById("direction").value;
 				setDirection(dir);
 				document.getElementById('loader').style.visibility = "visible";
 				submit();
 			}
-			
+
 		</script>
 	</body>
 </html>
@@ -281,12 +292,14 @@ func stopLoading() {
 }
 
 func checkLogic() bool {
+	// check that the user specified a file.
 	if file == "" {
 		pop("\nPlease select a file to " + direction + ".")
 		stopLoading()
 		return false
 	}
 
+	// Check that the user specified a key
 	if key == "" {
 		if direction == "encrypt" {
 			pop("\nPlease select a public key to " + direction + ".")
@@ -299,26 +312,53 @@ func checkLogic() bool {
 		}
 	}
 
+	// Check that the file does not have a "\"
 	if strings.Contains(file, "\\") {
 		pop("File name must not contain a \"\\\"... Please change the file name and try again.")
 		stopLoading()
 		return false
 	}
 
+	// Check that the key does not have a "`"
 	if strings.Contains(file, "`") {
 		pop("File name must not contain a \"`\"... Please change the file name and try again.")
 		stopLoading()
 		return false
 	}
 
+	// Check that the user specified file has a .ssh extension if encrypt is selected
 	if direction == "encrypt" && strings.Contains(file, ".ssh") {
 		pop("You are trying to encrypt a ssh-vault file. You probably want to decrypt instead?")
 		stopLoading()
 		return false
 	}
 
+	// Check that the user specified file has a .ssh extension if decrypt is selected
 	if direction == "decrypt" && strings.Contains(file, ".ssh") == false {
 		pop("You can only decrypt .ssh files...")
+		stopLoading()
+		return false
+	}
+
+	// Read key file to check
+	k, err := ioutil.ReadFile(key)
+	if err != nil {
+		pop("\nCan't read SSH Key: err")
+		stopLoading()
+		return false
+	}
+	ks := string(k)
+
+	// check that the user specified key is not a private key if encrypt is selected
+	if direction == "encrypt" && strings.Contains(ks, "PRIVATE") == true {
+		pop("\n To encrypt a file, you should be using the public key of the receiver instead. Please try again.")
+		stopLoading()
+		return false
+	}
+
+	// check that the user specified key is not a public key if decrypt is selected
+	if direction == "decrypt" && strings.Contains(ks, "PRIVATE") == false {
+		pop("\n To decrypt a file, you should be using your private key instead. Please try again.")
 		stopLoading()
 		return false
 	}
