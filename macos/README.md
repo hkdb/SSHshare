@@ -12,10 +12,16 @@ The Mac binaries include ssh-vault already so ssh-vault does not need to be inst
 
 ### Compiling:
 
+Execute the following if you are compiling for the first time:
+
+```
+go get
+```
+
 Execute the following scripts starting at the top level of the repo:
 
 ```
-./build.ssh
+./build.sh
 cd macos/
 ./dist
 ./install
