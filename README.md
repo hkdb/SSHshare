@@ -107,9 +107,22 @@ Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking 
 - Decrypt is selected but public key is specified
 - When user tries to drag and drop files (`Until Drag and Drop is implemented`)
 
-## Dependencies
+## Assumptions
 ---
-TBD
+
+All:
+- 64-bit OS
+
+Linux:
+- N/A
+
+Mac:
+- [HomeBrew](https://brew.sh/) is installed
+
+Windows:
+- [ssh-vault](https://ssh-vault.com) is installed
+
+
 
 ## Installation
 ---
