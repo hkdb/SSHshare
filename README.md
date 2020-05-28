@@ -5,7 +5,7 @@
 
 ## Description
 ---
-A Graphical Desktop Application (wrapper) written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting files with [ssh-vault](https://ssh-vault.com).
+A Cross-Platform Graphical Desktop Application (wrapper) written in Go, Javascript, and HTML5 that simplifies encrypting and decrypting files with [ssh-vault](https://ssh-vault.com).
 
 ## Concept
 ---
