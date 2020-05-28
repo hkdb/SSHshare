@@ -27,30 +27,9 @@ This was originally written in Python and GTK3 which is great when running on Li
 - Rewritten Go/JS/HTML
 - Removed restrictions of only processsing text files as ssh-vault supports pretty much all formats
 
-#### MAY 10th, 2019 - v0.1.3 Released
+#### Before May XXth, 2020
 
-- Platform detection fixed for Linux systems that returns "Linux2"
-- Fixed encryption command to avoid anomalies that causes failed output
-- Fixed decryption command and subprocess to avaid anomalies that causes failed output
-- Added short-cut button to use ~/.ssh/id_rsa without searching for it
-
-#### OCT 23th, 2018 - v0.1.2 Released
-
-- UI Fixes and Visual Cues
-- macOS .app
-- Windows 10 .exe
-- Linux Install Script installs ssh-vault to /usr/bin instead
-- Determines OS platform and puts the right full-path to ssh-vault on command execution to prevent env issues with launching with applications menu
-
-#### OCT 21th, 2018 - v0.1.1 Released
-
-- Hotfix - Installation Script Fixed
-- Hotfix - Interpreter for future cross platform support
-- Hotfix - .desktop fix
-
-#### OCT 21th, 2018 - v0.1.0 Released
-
-- Birth of SSHshare
+[Legacy Change Log](LegacyCL.md) for the Python GTK3 version of this App
 
 ## Screenshots
 ---
@@ -107,36 +86,19 @@ Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking 
 - Decrypt is selected but public key is specified
 - When user tries to drag and drop files (`Until Drag and Drop is implemented`)
 
-## Assumptions
----
-
-All:
-- 64-bit OS
-
-Linux:
-- N/A
-
-Mac:
-- [HomeBrew](https://brew.sh/) is installed
-
-Windows:
-- [ssh-vault](https://ssh-vault.com) is installed
-
-
-
-## Installation
+## Development & Installation
 ---
 
 ### [Linux](linux/README.md)
 ### [macOS](macos/README.md)
 ### [Win10](win/README.md)
 
-Enjoy!
 
 ## Future Plans
 ---
 
-Coming soon!
+- Drag and Drop of Files into Application for File Selection
+- Server Implementation to make team sharing more efficient
 
 
 ## Disclaimer
