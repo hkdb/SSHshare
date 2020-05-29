@@ -284,7 +284,13 @@ func pop(msg string) {
 			}
 
 			if runtime.GOOS == "windows" {
-
+				cmd := exec.Command(`cmd`, `/C`, `explorer`, `/select,`, fname)
+				err := cmd.Run()
+				if err != nil {
+					fmt.Println(err)
+					// This throws an error even though it successfully opens the file
+					// pop("\nCouldn't open folder " + fname + ": " + fmt.Sprint(err))
+				}
 			}
 		}
 	} else {
@@ -345,7 +351,7 @@ func checkLogic() bool {
 	}
 
 	// Check that the file does not have a "\"
-	if strings.Contains(file, "\\") {
+	if strings.Contains(getFileName("file"), "\\") {
 		pop("File name must not contain a \"\\\"... Please change the file name and try again.")
 		stopLoading()
 		return false
@@ -437,7 +443,19 @@ func process() {
 			}
 		}
 		if runtime.GOOS == "windows" {
-
+			k := filepath.ToSlash(key)
+			f := filepath.ToSlash(file)
+			cmd := exec.Command("cmd", "/C", "ssh-vault.exe", "-k", k, "create", "<", f, f+".ssh")
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			cerr := cmd.Run()
+			if cerr != nil {
+				pop(fmt.Sprint(cmd) + "\n" + fmt.Sprint(cerr) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
 		}
 	}
 	if direction == "decrypt" {
@@ -471,7 +489,18 @@ func process() {
 			}
 		}
 		if runtime.GOOS == "windows" {
-
+			cmd := exec.Command("cmd", "/C", "ssh-vault", "-k", key, "-o", removeExt(file), "view", file)
+			var out bytes.Buffer
+			var stderr bytes.Buffer
+			cmd.Stdout = &out
+			cmd.Stderr = &stderr
+			cerr := cmd.Run()
+			fmt.Println(cmd)
+			if cerr != nil {
+				pop(fmt.Sprint(cerr) + "\n\n" + stderr.String())
+			} else {
+				pop("done")
+			}
 		}
 	}
 	stopLoading()
