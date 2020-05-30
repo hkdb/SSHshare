@@ -1,4 +1,4 @@
-// PROJECT: GoGUI
+// PROJECT: SSHshare
 //
 // MAINTAINED BY: hkdb <hkdb@3df.io>
 //
@@ -214,7 +214,7 @@ func startServer() string {
 
 		log.Fatal(http.Serve(ln, nil))
 	}()
-	fmt.Println(ln.Addr().String())
+	// fmt.Println(ln.Addr().String())
 	return "http://" + ln.Addr().String()
 }
 
@@ -227,7 +227,7 @@ func handleRPC(data string) {
 	case data == "file":
 		filename, err := dialog.File().Load()
 		if err != nil {
-			fmt.Println("Can't read file...")
+			fmt.Println("No file to read. User must have canceled?")
 		} else {
 			file = filename
 			w.Eval("document.getElementById(\"file\").innerText = \"" + getFileName("file") + "\";")
@@ -236,7 +236,7 @@ func handleRPC(data string) {
 	case data == "key":
 		filename, err := dialog.File().Load()
 		if err != nil {
-			fmt.Println("Can't read file...")
+			fmt.Println("No file to read. User must have canceled?")
 		} else {
 			key = filename
 			w.Eval("document.getElementById(\"key\").innerText = \"" + getFileName("key") + "\";")
@@ -248,7 +248,9 @@ func handleRPC(data string) {
 //Helper for Opening URL with Default Browser
 func openl(uri string) {
 	err := open.Run(uri)
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func pop(msg string) {
@@ -466,7 +468,7 @@ func process() {
 			cmd.Stdout = &out
 			cmd.Stderr = &stderr
 			err := cmd.Run()
-			fmt.Println(cmd)
+			// fmt.Println(cmd)
 			if err != nil {
 				pop(fmt.Sprint(err) + "\n\n" + stderr.String())
 			} else {
@@ -495,7 +497,7 @@ func process() {
 			cmd.Stdout = &out
 			cmd.Stderr = &stderr
 			cerr := cmd.Run()
-			fmt.Println(cmd)
+			// fmt.Println(cmd)
 			if cerr != nil {
 				pop(fmt.Sprint(cerr) + "\n\n" + stderr.String())
 			} else {

@@ -25,9 +25,9 @@ esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
-DIR="SSHshare-v$VERSION-x64"
+DIR="SSHshare-v$VERSION-x64-Linux"
 mkdir $DIR
 cp SSHshare $DIR/ 
 cp ../SSHshare-icon.png $DIR
 cp install.sh $DIR/
-tar -cjvf SSHshare-v$VERSION-x64.tar.bz2 $DIR 
+tar -cjvf SSHshare-v$VERSION-x64-Linux.tar.bz2 $DIR 
