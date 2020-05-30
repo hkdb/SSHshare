@@ -10,6 +10,7 @@ maintained by: hkdb `<hkdb@3df.io>`
     - wget
     - gcc (Development Only)
     - Go (Development Only)
+- [Windows 10 SDK](https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk/) (Development Only)
 
 ### Delta:
 

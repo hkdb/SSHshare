@@ -1,3 +1,5 @@
+//go:generate goversioninfo -icon=win/icon.ico -manifest=win/SSHshare.exe.manifest
+
 // PROJECT: SSHshare
 //
 // MAINTAINED BY: hkdb <hkdb@3df.io>
@@ -6,6 +8,7 @@
 //
 // This application is maintained by volunteers and in no way
 // do the maintainers make any guarantees. Use at your own risk.
+
 package main
 
 import (
