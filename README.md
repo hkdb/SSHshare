@@ -63,7 +63,7 @@ Persona B:
 - `private` - b_id_rsa
 - `public` - b_id_rsa.pub
 
-Scenario: `A` sends an encrypted file named `presentation.pdf` to `B`
+Scenario: `A` wants to securely send a file named `presentation.pdf` to `B`
 1. B sends his/her public key (`b_id_rsa.pub`) to A by e-mail or a messenger of choice
 2. A selects (`presentation.pdf`) and `b_id_rsa.pub` on SSHshare to encrypt the file
 3. A will find a new file named `presentation.pdf.ssh` located in the same directory as `presentation.pdf`
