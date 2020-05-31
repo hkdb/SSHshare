@@ -22,6 +22,8 @@ This was originally written in Python and GTK3 which is great when running on Li
 ## Change Log
 ---
 
+You can also follow our twitter to track announcements of releases of this project as well as other 3DF OSI projects and news: https://twitter.com/3dfosi
+
 #### May 31st, 2020 - v0.2.0 Released
 
 - Rewritten in Go/JS/HTML
