@@ -1,6 +1,22 @@
 # Linux
 maintained by: hkdb `<hkdb@3df.io>`
 
+![SSHshare](../SSHshare-icon.png)
+
+### Installation:
+
+1. Download the tarball: SSHshare-v`<version>`-x64.tar.bz2
+
+2. Untar
+   ```
+   tar -xjvf SSHshare-<version>-x64.tar.bz2
+   ```
+
+3. Execute the following command:
+   ```
+   cd SSHshare-<version>-x64
+   ./install.sh
+   ```
 ### Dependancies:
 
 - GoLang
@@ -35,18 +51,3 @@ cd linux
 ./dist.sh -v <version>
 ```
 Now you should have linux/SSHshare-`<version>`-x64.tar.bz2 ready for distribution
-
-### Installation:
-
-1. Download the tarball: `<tbd>`
-
-2. Untar
-   ```
-   tar -xjvf SSHshare-<version>-x64.tar.bz2
-   ```
-
-3. Execute the following command:
-   ```
-   cd SSHshare-<version>-x64
-   ./install
-   ```

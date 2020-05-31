@@ -4,6 +4,22 @@ maintained by: hkdb `<hkdb@3df.io>`
 
 ![SSHshare](../SSHshare-icon.png)
 
+### Installation:
+
+1. Download the zip archive: SSH-v<version>-x64-win10.zip
+
+2. Unzip SSHshare-<version>-x64-win10.zip
+   
+3. Open Powershell as Administrator:
+   ```
+   PS C:\WINDOWS\system32> CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"
+   ```
+   Note: This is to allow hosting a webserver on localhost which is the backend of the application
+
+4. Open up the unzipped folder and double click on "install.bat"
+
+5. You now have successfully installed SSHshare for Windows and a new shortcut on your desktop to launch the app
+
 ### Dependancies:
 
 - OpenSSH
@@ -67,19 +83,3 @@ cd win
 .\dist.bat -v <version>
 ```
 Now you should have win/SSHshare-`<version>`-x64-win10.zip ready for distribution
-
-### Installation:
-
-1. Download the zip archive: SSH-v<version>-x64-win10.zip
-
-2. Unzip SSHshare-<version>-x64-win10.zip
-   
-3. Open Powershell as Administrator:
-   ```
-   PS C:\WINDOWS\system32> CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"
-   ```
-   Note: This is to allow hosting a webserver on localhost which is the backend of the application
-
-4. Open up the unzipped folder and double click on "install.bat"
-
-5. You now have successfully installed SSHshare for Windows and a new shortcut on your desktop to launch the app

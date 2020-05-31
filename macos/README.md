@@ -3,6 +3,14 @@ maintained by: hkdb `<hkdb@3df.io>`
 
 ![SSHshare](../SSHshare-icon.png)
 
+### Installation:
+
+1. Download Mac Binary: SSHshare-[version]-x64-MacOS.dmg
+
+2. Double Click the downloaded dmg
+
+3. Move to "/Applications" directory.
+
 ### Dependancies:
 
 - GoLang
@@ -30,11 +38,3 @@ cd macos/
 ```
 
 It's now compiled and installed on your system. 
-
-### Installation:
-
-1. Download Mac Binary: SSHshare-[version]-x64-MacOS.dmg
-
-2. Double Click the downloaded dmg
-
-3. Move to "/Applications" directory.
