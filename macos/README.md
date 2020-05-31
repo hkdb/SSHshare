@@ -1,6 +1,8 @@
 # MacOS (Darwin)
 maintained by: hkdb `<hkdb@3df.io>`
 
+![SSHshare](../SSHshare-icon.png)
+
 ### Dependancies:
 
 - GoLang
@@ -31,8 +33,8 @@ It's now compiled and installed on your system.
 
 ### Installation:
 
-1. Download Mac Binary: `<tbd>`
+1. Download Mac Binary: SSHshare-[version]-x64-MacOS.dmg
 
-2. Unzip
+2. Double Click the downloaded dmg
 
 3. Move to "/Applications" directory.
