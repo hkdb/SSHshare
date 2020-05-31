@@ -11,7 +11,7 @@ A Cross-Platform Graphical Desktop Application (GUI wrapper) written in Go, Java
 ---
 A while back, I discovered this awesome piece of software called [ssh-vault](https://ssh-vault.com) that allows you to encrypt and decrypt text, photos, and pdf files with ssh keys. I found this to be the most user friendly (NON-CLOUD) way to share passwords and sensitive documents between my team members. However, as technical as some of my team members are, not all of them are comfortable with CLI so I decided to whip this GUI front-end up so that they are more comfortable with using this solution to share information securely.
 
-### WHy SSH Keys?
+### Why SSH Keys?
 
 Because most technical staff and more and more so even non-technical ones have a ssh key pair already for accessing cloud resources and such. Leveraging what's already there to encrypt and decrypt information shared among team members is a much better solution than to ask everyone to adopt yet another tech (ie. GPG, etc) to accomplish what can already be done with the existing encryption toolbox.
 
