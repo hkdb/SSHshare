@@ -29,5 +29,5 @@ DIR="SSHshare-v$VERSION-x64-Linux"
 mkdir $DIR
 cp SSHshare $DIR/ 
 cp ../SSHshare-icon.png $DIR
-cp install.sh $DIR/
+cp dist/install.sh $DIR/
 tar -cjvf SSHshare-v$VERSION-x64-Linux.tar.bz2 $DIR 
