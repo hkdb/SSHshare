@@ -9,23 +9,17 @@ maintained by: hkdb `<hkdb@3df.io>`
 1. Download the zip archive: SSH-v<version>-x64-win10.zip
 
 2. Unzip SSHshare-<version>-x64-win10.zip
-   
-3. Open Powershell as Administrator:
-   ```
-   PS C:\WINDOWS\system32> CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"
-   ```
-   Note: This is to allow hosting a webserver on localhost which is the backend of the application
 
-4. Open up the unzipped folder and double click on "install.bat"
+3. Open up the unzipped folder and double click on "install.bat"
 
-5. You now have successfully installed SSHshare for Windows and a new shortcut on your desktop to launch the app
+4. You now have successfully installed SSHshare for Windows and a new shortcut on your desktop to launch the app
 
 ### Dependancies:
 
 - OpenSSH
 - ssh-vault
 - [Scoop](https://scoop.sh)
-    - wget
+    - wget (Development Only)
     - gcc (Development Only)
     - Go (Development Only)
     - zip (Development Only)
@@ -36,13 +30,18 @@ maintained by: hkdb `<hkdb@3df.io>`
 
 - ssh-vault will be included in the release zip
 
-- ssh-vault will be installed at C:\Users\<username>\AppData\Local\Microsoft\WindowsApps
+- ssh-vault will be installed alongside SSHshare just like the Mac release
 
 - The two DLL files must be in the same directory as the compiled exe for it to run properly.
 
 - SSHshare will be installed in C:\Users\<username>\AppData\Local\Programs\SSHshare\
 
 - A desktop shortcut will be automatically made.
+
+- The following command to allow for running a webserver on localhost is executed with Administrator Privileges during install:
+  ```
+  start-process -verb runAs CheckNetIsolation.exe LoopbackExempt -a -n="Microsoft.Win32WebViewHost_cw5n1h2txyewy"
+  ```
 
 ### Compiling:
 

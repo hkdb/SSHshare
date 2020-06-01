@@ -17,7 +17,7 @@ mkdir %dir%
 mkdir %dir%\SSHshare
 wget -O ssh-vault_0.12.6_windows_amd64.zip https://bintray.com/nbari/ssh-vault/download_file?file_path=ssh-vault_0.12.6_windows_amd64.zip
 unzip -n ssh-vault_0.12.6_windows_amd64.zip
-move ssh-vault.exe %dir%
+move ssh-vault.exe %dir%\SSHshare
 del LICENSE
 del ssh-vault_0.12.6_windows_amd64.zip
 copy SSHshare.exe %dir%\SSHshare 

@@ -35,7 +35,7 @@ const (
 	windowWidth  = 500
 	windowHeight = 800
 	title        = "SSHshare"
-	version      = "v0.2.0"
+	version      = "v0.2.1"
 )
 
 // WebView Object
@@ -448,9 +448,10 @@ func process() {
 			}
 		}
 		if runtime.GOOS == "windows" {
+			dir := getCurrentPath()
 			k := filepath.ToSlash(key)
 			f := filepath.ToSlash(file)
-			cmd := exec.Command("cmd", "/C", "ssh-vault.exe", "-k", k, "create", "<", f, f+".ssh")
+			cmd := exec.Command("cmd", "/C", dir+"\\ssh-vault.exe", "-k", k, "create", "<", f, f+".ssh")
 			var out bytes.Buffer
 			var stderr bytes.Buffer
 			cmd.Stdout = &out
@@ -494,7 +495,8 @@ func process() {
 			}
 		}
 		if runtime.GOOS == "windows" {
-			cmd := exec.Command("cmd", "/C", "ssh-vault", "-k", key, "-o", removeExt(file), "view", file)
+			dir := getCurrentPath()
+			cmd := exec.Command("cmd", "/C", dir+"\\ssh-vault", "-k", key, "-o", removeExt(file), "view", file)
 			var out bytes.Buffer
 			var stderr bytes.Buffer
 			cmd.Stdout = &out
