@@ -24,7 +24,7 @@ This was originally written in Python and GTK3 which is great when running on Li
 
 You can also follow our twitter to track announcements of releases of this project as well as other 3DF OSI projects and news: https://twitter.com/3dfosi
 
-#### June 1st, 2020 - v0.2.1 Released
+#### June 3st, 2020 - v0.2.1 Released
 
 - Applied fix for Windows:
     - Automated powershell command in install script to avoid having to ask the user to use CLI
