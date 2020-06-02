@@ -1,4 +1,4 @@
-# SSHshare v0.2.0
+# SSHshare v0.2.1
 **maintained by:** hkdb \<<hkdb@3df.io>\><br />
 
 ![SSHshare](SSHshare-icon.png)
