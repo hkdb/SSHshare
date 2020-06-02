@@ -112,7 +112,7 @@ Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking 
 - Generate ssh keys
 - Shortcut to your own private or public key
 - Server Implementation to make team sharing more efficient
-- Default appliation to encrypt and decrypt to behave more like compress and decompress files
+- Default application to encrypt and decrypt to behave more like compress and decompress files
 
 
 ## Disclaimer
