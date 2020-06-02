@@ -108,11 +108,14 @@ Shows an Error Dialog Message and Returns to Main Window Upon the User Clicking 
 ## Future Plans
 ---
 
+- SSH key password support
 - Drag and Drop of Files into Application for File Selection
 - Generate ssh keys
-- Shortcut to your own private or public key
-- Server Implementation to make team sharing more efficient
-- Default application to encrypt and decrypt to behave more like compress and decompress files
+- Better security for WebView connection to Web Server
+- Shortcut to the user's own private or public key
+- Frequent receivers menu
+- Server Implementation to make team sharing/key management more efficient
+- OS integration; behaving more like the compress and decompress file workflows that are activated by the "left click menu"
 
 
 ## Disclaimer
